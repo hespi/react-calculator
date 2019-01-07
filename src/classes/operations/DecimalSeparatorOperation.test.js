@@ -1,6 +1,6 @@
 import DecimalSeparatorOperation from './DecimalSeparatorOperation';
 import Calculation from './Calculation';
-var Constants = require('../common/Constants');
+import { Constants } from '../common/Constants';
 
 let operation = new DecimalSeparatorOperation();
 let calculation;

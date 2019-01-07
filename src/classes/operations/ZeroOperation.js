@@ -2,19 +2,13 @@ import Operation from './Operation';
 
 export default class ZeroOperation extends Operation {
     
-    get decimalSeparator() {
-
-    }
-
     constructor() {
-        super("CE")
+        super("CE", false);
     }
 
     apply(calculation) {
         this._validateFormula(calculation);
-        while (calculation.currentNumber != "0") {
-            calculation.removeDigit();
-        }
+        calculation.currentNumber = "0";
         return calculation.formula;
     }
 

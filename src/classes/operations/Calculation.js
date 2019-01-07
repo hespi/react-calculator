@@ -1,6 +1,5 @@
 import Operation from './Operation';
-
-var Constants = require('../common/Constants');
+import { Constants } from '../common/Constants';
 
 export default class Calculation {
     _currentNumber = null;
@@ -14,7 +13,11 @@ export default class Calculation {
     }
 
     get currentNumber() {
-        return !!this._currentNumber ? this._currentNumber : new String(this.total);
+        return !!this._currentNumber ? this._currentNumber : (this.total + "");
+    }
+
+    set currentNumber(value) {
+        this._currentNumber = value;
     }
 
     get total() {
@@ -53,14 +56,26 @@ export default class Calculation {
 
     addOperation(operation) {
         this._validateOperation(operation);
-        this._doAddOperation(operation);
+        if (operation.isMathOperation) {
+            this._addMathOperation(operation);
+        } else {
+            operation.apply(this);
+        }
     }
 
     calculate() {
+        if (!!this._currentNumber) {
+            this._addCurrentNumberToCurrentFormula();
+        }
+
         if(!!this._getCurrentFormula()) {
-            this._currentNumber = new String(parseFloat(eval(this.formula)));
+            this._currentNumber = (parseFloat(eval(this.formula)) + "");
             this._formulaStack.push("");
         }
+    }
+
+    lastItemIsOperation() {
+        return (this._itemStack.length > 0 && this._itemStack[this._itemStack.length - 1] instanceof Operation);
     }
 
     /** FUNCTIONS */
@@ -84,6 +99,8 @@ export default class Calculation {
         } else {
             this._currentNumber += digit;
         }
+
+        this._itemStack.push(digit);
     }
 
     _addDecimalSeparator() {
@@ -92,8 +109,8 @@ export default class Calculation {
         }
     }
 
-    _doAddOperation(operation) {
-        if (this._lastItemIsOperation() && !!!this._currentNumber) {
+    _addMathOperation(operation) {
+        if (this.lastItemIsOperation() && !!!this._currentNumber) {
             this._popStacks();
         }
         if (!!this._currentNumber) {
@@ -108,15 +125,24 @@ export default class Calculation {
         this._itemStack.push(operation);
     }
 
-    _lastItemIsOperation() {
-        return (this._itemStack.length > 0 && this._itemStack[this._itemStack.length - 1] instanceof Operation);
-    }
-
     _addCurrentNumberToCurrentFormula() {
         let ix = Math.max(0, this._formulaStack.length - 1);
         this._formulaStack[ix] = (!!this._formulaStack[ix] ? this._formulaStack[ix] : "") + " " + this.currentNumber;
-        this._currentNumber = "";
-        this._total = parseFloat(eval(this._formulaStack[ix]));
+        let newTotal = this._parseFormula(this._formulaStack[ix]);
+        if (!isNaN(newTotal)) {
+            this._currentNumber = "";
+            this._total = newTotal;
+        }
+        
+    }
+
+    _parseFormula(formula) {
+        try {
+            return parseFloat(eval(formula))
+        } catch (ex) {
+            return NaN;
+        }
+
     }
 
     _popStacks() {
@@ -125,6 +151,6 @@ export default class Calculation {
     }
 
     _getCurrentFormula() {
-        return (this._formulaStack.length == 0) ? "" : this._formulaStack[this._formulaStack.length - 1];
+        return (this._formulaStack.length === 0) ? "" : this._formulaStack[this._formulaStack.length - 1];
     }
 }

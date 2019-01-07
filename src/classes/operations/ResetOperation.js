@@ -2,12 +2,8 @@ import Operation from './Operation';
 
 export default class ResetOperation extends Operation {
     
-    get decimalSeparator() {
-
-    }
-
     constructor() {
-        super("C")
+        super("C", false);
     }
 
     apply(calculation) {

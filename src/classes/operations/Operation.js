@@ -2,8 +2,11 @@ export default class Operation {
     
     text = "";
 
-    constructor(text = "") {
+    isMathOperation = true;
+
+    constructor(text = "", isMathOperation = true) {
         this.text = text;
+        this.isMathOperation = isMathOperation;
     }
 
     apply(calculation) {

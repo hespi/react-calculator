@@ -5,7 +5,7 @@ import DivisionOperation from './DivisionOperation';
 import NegateOperation from './NegateOperation';
 import ProductOperation from './ProductOperation';
 import EqualsOperation from './EqualsOperation';
-var Constants = require('../common/Constants');
+import { Constants } from '../common/Constants';
 
 let calculation;
 
@@ -63,6 +63,7 @@ describe("Calculation tests", () => {
         });
 
         test("Given empty number, When adding decimal separator, Then text remains and decimal separator is added", () => {
+            debugger;
             calculation.addDigit(Constants.decimalSeparator);
             expect(calculation.currentNumber).toEqual("0" + Constants.decimalSeparator);    
             expect(calculation.formula).toEqual("0");    

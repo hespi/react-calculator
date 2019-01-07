@@ -1,14 +1,10 @@
 import Operation from './Operation';
-var Constants = require('../common/Constants');
+import { Constants } from '../common/Constants';
 
 export default class DecimalSeparatorOperation extends Operation {
     
-    get decimalSeparator() {
-
-    }
-
     constructor() {
-        super(",")
+        super(",", false);
     }
 
     apply(calculation) {

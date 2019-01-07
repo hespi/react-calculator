@@ -1,13 +1,9 @@
 import Operation from './Operation';
 
 export default class DeleteOperation extends Operation {
-    
-    get decimalSeparator() {
-
-    }
 
     constructor() {
-        super("&‌larr;")
+        super("&‌larr;", false);
     }
 
     apply(calculation) {

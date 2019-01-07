@@ -3,7 +3,7 @@ import Operation from './Operation';
 export default class EqualsOperation extends Operation {
     
     constructor() {
-        super("=")
+        super("=", false);
     }
 
     apply(calculation) {

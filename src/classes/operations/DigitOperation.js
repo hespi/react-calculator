@@ -1,14 +1,9 @@
 import Operation from './Operation';
-var Constants = require('../common/Constants');
 
 export default class DigitOperation extends Operation {
     
-    get decimalSeparator() {
-
-    }
-
     constructor(number) {
-        super(number + "");
+        super(number + "", false);
         this._validateNumber(number);        
     }
 
