@@ -2,6 +2,7 @@ import DigitOperation from './DigitOperation';
 import Calculation from './Calculation';
 var Constants = require('../common/Constants');
 
+let operation;
 let calculation;
 
 describe("DigitOperation tests", () => {
@@ -11,7 +12,7 @@ describe("DigitOperation tests", () => {
     });
 
     test("Given digit operation, When creating it, Then text is equal to digit", () => {
-        let operation = new DigitOperation(1);
+        operation = new DigitOperation(1);
         expect(operation.text).toEqual("1");    
 
         operation = new DigitOperation(9);

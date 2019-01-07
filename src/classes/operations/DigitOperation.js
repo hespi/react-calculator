@@ -8,8 +8,8 @@ export default class DigitOperation extends Operation {
     }
 
     constructor(number) {
-        this._validateNumber(number);
         super(number + "");
+        this._validateNumber(number);        
     }
 
     apply(calculation) {
