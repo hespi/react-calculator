@@ -11,7 +11,7 @@ describe("DeleteOperation tests", () => {
     });
 
     test("Given delete operation, When creating it, Then text is &‌larr;", () => {
-        expect(operation.text).toEqual("&‌larr;");    
+        expect(operation.text).toEqual("&#9003;");    
     });
 
     test("Given null calculation, When applying operation, Then exception is thrown", () => {

@@ -219,7 +219,7 @@ describe("Calculation tests", () => {
 
     describe("Functional tests", () => {
         test("Given empty calculation, When adding numbers and operations, Then calculations are done fine", () => {
-            
+            debugger;
             calculation.addDigit(1);
             expect(calculation.formula).toEqual("0");
             expect(calculation.currentNumber).toEqual("1");
@@ -273,6 +273,15 @@ describe("Calculation tests", () => {
             expect(calculation._formulaStack[calculation._formulaStack.length - 2]).toEqual("1 + 2 * 3" + Constants.decimalSeparator + "33 / 2");
             expect(calculation.currentNumber).toEqual("4.33"); 
             expect(calculation.total).toEqual(4.33); 
+
+            //After equals, formula is reset
+            calculation.addDigit(2);
+            expect(calculation.formula).toEqual("0");
+            expect(calculation.currentNumber).toEqual("2");
+
+            calculation.addOperation(new DivisionOperation());
+            expect(calculation.formula).toEqual("2 /");
+            expect(calculation.currentNumber).toEqual("2");
         });
 
         test("Given empty calculation, When adding numbers and operations and equals between them, Then calculations work as Windows calculator", () => {

@@ -3,7 +3,7 @@ import Operation from './Operation';
 export default class DeleteOperation extends Operation {
 
     constructor() {
-        super("&‌larr;", false);
+        super("&#9003;", false);
     }
 
     apply(calculation) {
