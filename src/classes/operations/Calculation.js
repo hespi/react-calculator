@@ -6,6 +6,7 @@ export default class Calculation {
     _total = 0;
     _itemStack = [];
     _formulaStack = [];
+    _lastItemIsCalculation = false;
 
     get formula() {
         let currentFormula = this._getCurrentFormula();
@@ -28,7 +29,8 @@ export default class Calculation {
         this._itemStack = [];
 
         if (!!calculation) {
-            this._formulaStack.push(calculation);
+            this._pushFormula(calculation);
+            this._lastItemIsCalculation = true;
         }
         
         this._currentNumber = number;
@@ -46,6 +48,10 @@ export default class Calculation {
         if(digit === Constants.decimalSeparator) {
             this._addDecimalSeparator();
         } else {
+            if (!!this._lastItemIsCalculation) {
+                this._currentNumber = "";
+            }
+
             this._doAddDigit(digit);
         }
     }
@@ -70,8 +76,10 @@ export default class Calculation {
 
         if(!!this._getCurrentFormula()) {
             this._currentNumber = (parseFloat(eval(this.formula)) + "");
-            this._formulaStack.push("");
+            this._pushFormula("");
         }
+
+        this._lastItemIsCalculation = true;
     }
 
     lastItemIsOperation() {
@@ -100,7 +108,7 @@ export default class Calculation {
             this._currentNumber += digit;
         }
 
-        this._itemStack.push(digit);
+        this._pushItem(digit);
     }
 
     _addDecimalSeparator() {
@@ -119,10 +127,10 @@ export default class Calculation {
         
         let formulaAfterOperation = operation.apply(this);
         if (!!formulaAfterOperation) {
-            this._formulaStack.push(formulaAfterOperation);
+            this._pushFormula(formulaAfterOperation);
         }
         
-        this._itemStack.push(operation);
+        this._pushItem(operation);
     }
 
     _addCurrentNumberToCurrentFormula() {
@@ -152,5 +160,14 @@ export default class Calculation {
 
     _getCurrentFormula() {
         return (this._formulaStack.length === 0) ? "" : this._formulaStack[this._formulaStack.length - 1];
+    }
+
+    _pushFormula(formula) {
+        this._formulaStack.push(formula);
+    }
+
+    _pushItem(item) {
+        this._itemStack.push(item);
+        this._lastItemIsCalculation = false;
     }
 }
