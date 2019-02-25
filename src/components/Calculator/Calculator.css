@@ -1,0 +1,9 @@
+.calculator {
+    border: 2px solid #1883D7;
+    border-radius: 0px;
+    display: inline-block;
+}
+
+.calculator .button-panel {
+    border-top: 1px solid #F2F2F2;
+}
